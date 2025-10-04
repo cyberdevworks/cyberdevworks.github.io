@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Developer | Yazılım Mühendisi</title>
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --text-color: #c9d1d9;
+      --header-bg: #161b22;
+      --section-bg: #0d1117;
+      --accent-color: #58a6ff;
+      --muted-text: #8b949e;
+      --button-bg: #21262d;
+      --button-hover: #30363d;
+    }
+
+    .light-mode {
+      --bg-color: #f6f8fa;
+      --text-color: #24292f;
+      --header-bg: #ffffff;
+      --section-bg: #f6f8fa;
+      --accent-color: #0969da;
+      --muted-text: #57606a;
+      --button-bg: #eaeef2;
+      --button-hover: #d0d7de;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--header-bg);
+      text-align: center;
+      padding: 30px 10px;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      color: var(--accent-color);
+      margin: 0;
+    }
+
+    header p {
+      color: var(--muted-text);
+      margin-top: 8px;
+      font-size: 1.1em;
+    }
+
+    .top-controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 8px;
+    }
+
+    button {
+      background: var(--button-bg);
+      color: var(--accent-color);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    button:hover {
+      background: var(--button-hover);
+      transform: scale(1.07);
+      filter: brightness(1.2);
+      box-shadow: 0 0 8px var(--accent-color);
+    }
+
+    .theme-btn {
+      font-size: 1.2em;
+      transition: transform 0.5s ease;
+    }
+
+    .theme-btn.rotate {
+      transform: rotate(360deg);
+    }
+
+    #projectsButton {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      color: var(--accent-color);
+      border-bottom: 2px solid var(--button-hover);
+      padding-bottom: 8px;
+      text-transform: uppercase;
+      font-size: 1.3em;
+    }
+
+    .skill-badge {
+      display: inline-block;
+      background: var(--button-bg);
+      color: var(--accent-color);
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin: 4px;
+      font-size: 0.9em;
+      transition: transform 0.2s ease;
+    }
+
+    .skill-badge:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 6px var(--accent-color);
+    }
+
+    footer {
+      background: var(--header-bg);
+      text-align: center;
+      padding: 15px;
+      color: var(--muted-text);
+      font-size: 0.9em;
+      margin-top: auto;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #fff;
+    }
+
+    .contact-icons {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .contact-icons a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1em;
+      color: var(--accent-color);
+      transition: transform 0.25s ease, color 0.3s ease;
+    }
+
+    .contact-icons a:hover {
+      transform: translateX(6px);
+      color: #ffffff;
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    #projects-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+      color: var(--text-color);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 40px;
+    }
+
+    #projects-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button id="projectsButton"><span>📁</span> Projeler</button>
+
+    <div class="top-controls">
+      <button onclick="setLanguage('tr')"><span>🇹🇷</span></button>
+      <button onclick="setLanguage('en')"><span>🇬🇧</span></button>
+      <button id="themeBtn" class="theme-btn" onclick="toggleTheme()"><span>🌙</span></button>
+    </div>
+
+    <h1 id="title">⚡ Cyber Developer | Yazılım Mühendisi</h1>
+    <p id="subtitle">👋 Merhaba! Ben Kerim, modern web teknolojilerine ve yazılım geliştirmeye tutkulu bir mühendis.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2 id="about-title">Hakkımda</h2>
+      <p id="about-text">Yazılım dünyasında sürekli öğrenmeyi, yeni teknolojileri keşfetmeyi ve kullanıcı odaklı çözümler geliştirmeyi seviyorum.</p>
+    </section>
+
+    <section>
+      <h2 id="skills-title">Beceriler</h2>
+      <div id="skills-list">
+        <span class="skill-badge">Java</span>
+        <span class="skill-badge">Java++</span>
+        <span class="skill-badge">Java#</span>
+        <span class="skill-badge">JavaScript</span>
+        <span class="skill-badge">HTML</span>
+        <span class="skill-badge">CSS</span>
+        <span class="skill-badge">Python</span>
+        <span class="skill-badge">SQL</span>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="contact-title">İletişim</h2>
+      <div class="contact-icons">
+        <a href="mailto:cyberdevworks@gmail.com"><img src="icons/gmail.png" class="icon"> cyberdevworks@gmail.com</a>
+        <a href="https://github.com/cyberdevworks"><img src="icons/github.png" class="icon"> GitHub</a>
+        <a href="https://www.linkedin.com/in/cyberdevworks/"><img src="icons/linkedin.png" class="icon"> LinkedIn</a>
+        <a href="https://www.instagram.com/cyberdev.02/"><img src="icons/instagram.png" class="icon"> Instagram</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    © 2025 ⚡ Cyber Developer | 
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">CC BY-NC-ND 4.0</a>
+  </footer>
+
+  <div id="projects-modal">
+    <div id="projects-controls">
+      <button class="home-btn" onclick="closeProjects()">🏠 Ana Sayfa</button>
+      <button class="close-btn" onclick="closeProjects()">✖ Kapat</button>
+    </div>
+    <h2 id="projects-title">Projeler</h2>
+    <ul id="projects-list">
+      <li id="project-item">
+        <strong><a href="https://modrinth.com/project/vanillaplusgui" target="_blank">Vanilla Plus GUI</a></strong> › Minecraft için modern bir arayüz projesi
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const translations = {
+      tr: {
+        title: "Cyber Developer | Yazılım Mühendisi",
+        subtitle: "👋 Merhaba! Ben Kerim, modern web teknolojilerine ve yazılım geliştirmeye tutkulu bir mühendis.",
+        aboutTitle: "Hakkımda",
+        aboutText: "Yazılım dünyasında sürekli öğrenmeyi, yeni teknolojileri keşfetmeyi ve kullanıcı odaklı çözümler geliştirmeyi seviyorum.",
+        skillsTitle: "Beceriler",
+        projectsTitle: "Projeler",
+        contactTitle: "İletişim",
+        homeBtn: "🏠 Ana Sayfa",
+        closeBtn: "✖ Kapat",
+        footer: "© 2025 ⚡ Cyber Developer | <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode'>CC BY-NC-ND 4.0</a> altında lisanslanmıştır.",
+        projectItem: "<strong><a href='https://modrinth.com/project/vanillaplusgui' target='_blank'>Vanilla Plus GUI</a></strong> › Minecraft için modern bir arayüz projesi"
+      },
+      en: {
+        title: "Cyber Developer | Software Engineer",
+        subtitle: "👋 Hey there! I'm Kerim, a passionate software engineer focused on modern web technologies.",
+        aboutTitle: "About Me",
+        aboutText: "I love constantly learning in the world of software, exploring new technologies and building user-focused solutions.",
+        skillsTitle: "Skills",
+        projectsTitle: "Projects",
+        contactTitle: "Contact",
+        homeBtn: "🏠 Home",
+        closeBtn: "✖ Close",
+        footer: "© 2025 ⚡ Cyber Developer | Licensed under the <a href='https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode'>CC BY-NC-ND 4.0</a>.",
+        projectItem: "<strong><a href='https://modrinth.com/project/vanillaplusgui' target='_blank'>Vanilla Plus GUI</a></strong> › A modern interface project for Minecraft"
+      }
+    };
+
+    function setLanguage(lang) {
+      localStorage.setItem("preferredLanguage", lang);
+      applyLanguage(lang);
+    }
+
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      document.title = t.title;
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("subtitle").textContent = t.subtitle;
+      document.getElementById("about-title").textContent = t.aboutTitle;
+      document.getElementById("about-text").textContent = t.aboutText;
+      document.getElementById("skills-title").textContent = t.skillsTitle;
+      document.getElementById("projects-title").textContent = t.projectsTitle;
+      document.getElementById("contact-title").textContent = t.contactTitle;
+      document.getElementById("footer").innerHTML = t.footer;
+      document.getElementById("project-item").innerHTML = t.projectItem;
+      document.querySelector(".home-btn").innerHTML = t.homeBtn;
+      document.querySelector(".close-btn").innerHTML = t.closeBtn;
+      document.getElementById("projectsButton").innerHTML =
+        lang === "tr" ? "<span>📁</span> Projeler" : "<span>📁</span> Projects";
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.getElementById("themeBtn");
+      btn.classList.add("rotate");
+      setTimeout(() => btn.classList.remove("rotate"), 500);
+      body.classList.toggle("light-mode");
+      const mode = body.classList.contains("light-mode") ? "light" : "dark";
+      localStorage.setItem("preferredTheme", mode);
+      btn.innerHTML = mode === "light" ? "<span>🌞</span>" : "<span>🌙</span>";
+    }
+
+    function openProjects() {
+      document.getElementById("projects-modal").style.display = "block";
+    }
+
+    function closeProjects() {
+      document.getElementById("projects-modal").style.display = "none";
+    }
+
+    document.getElementById("projectsButton").onclick = openProjects;
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeProjects();
+    });
+
+    window.onload = () => {
+      const savedLang = localStorage.getItem("preferredLanguage") || "tr";
+      const savedTheme = localStorage.getItem("preferredTheme");
+      applyLanguage(savedLang);
+      if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
+        document.getElementById("themeBtn").innerHTML = "<span>🌞</span>";
+      }
+    };
+  </script>
+</body>
+</html>
