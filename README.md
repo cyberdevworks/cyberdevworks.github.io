@@ -1,7 +1,7 @@
 # ⚡ Cyber Developer
 
 ### 🇬🇧 English
-Hi there! I'm **Cyber Developer (Kerim)** — a passionate software engineer who loves building **modern interfaces**, **creative coding tools**, and **efficient digital experiences**.  
+Hi there! I'm **Storm. (Kerim)** — a passionate software engineer who loves building **modern interfaces**, **creative coding tools**, and **efficient digital experiences**.  
 I focus on web technologies, automation, and innovative design.
 
 ---
@@ -26,7 +26,7 @@ This work is licensed under the **Creative Commons Attribution-NonCommercial-NoD
 ---
 
 ## 🇹🇷 Türkçe
-Merhaba! Ben **Cyber Developer (Kerim)** — **modern arayüzler**, **yaratıcı yazılım araçları** ve **verimli dijital deneyimler** geliştiren tutkulu bir yazılım geliştiricisiyim.  
+Merhaba! Ben **Storm. (Kerim)** — **modern arayüzler**, **yaratıcı yazılım araçları** ve **verimli dijital deneyimler** geliştiren tutkulu bir yazılım geliştiricisiyim.  
 Web teknolojileri, otomasyon ve yenilikçi tasarım alanlarında çalışıyorum.
 
 ---
