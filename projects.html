@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyber Developer | Projeler</title>
+
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/logo.png">
+  <link rel="apple-touch-icon" href="icons/logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg1: #0a1124;
+      --bg2: #141a33;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #3b82f6;
+      --border: rgba(255, 255, 255, 0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* 🔹 HEADER */
+    header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 17, 36, 0.6);
+      backdrop-filter: blur(8px);
+      height: 64px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before, .lang-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+
+    nav a:hover::before, .lang-btn:hover::before {
+      left: 125%;
+    }
+
+    nav a:hover, .lang-btn:hover {
+      color: var(--accent);
+      background: rgba(59, 130, 246, 0.08);
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+    }
+
+    /* 🔹 DİL SEÇİCİ */
+    .lang-selector { position: relative; cursor: pointer; }
+
+    .lang-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      font-size: 22px;
+      color: var(--muted);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .lang-options {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 46px;
+      background: rgba(20, 26, 51, 0.95);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      z-index: 20;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .lang-options button {
+      background: none;
+      border: none;
+      color: var(--text);
+      width: 100%;
+      text-align: left;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .lang-options button:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* 🔹 ANA İÇERİK */
+    main {
+      flex: 1;
+      padding: 60px 30px;
+      max-width: 1200px;
+      margin: auto;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 40px;
+      font-size: 2.2rem;
+    }
+
+    /* 🔹 PROJE KARTLARI (Düzenlendi) */
+    .project-grid {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .project-card {
+      perspective: 1000px;
+      width: 280px;
+      height: 220px;
+      flex: 1 1 280px;
+      max-width: 320px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s ease;
+      transform-style: preserve-3d;
+    }
+
+    .project-card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius);
+      backface-visibility: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      padding: 30px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(145deg, rgba(20,30,60,0.9), rgba(10,15,30,0.8));
+    }
+
+    .card-front h2 {
+      color: var(--accent);
+      margin-bottom: 14px;
+      font-size: 1.3rem;
+    }
+
+    .card-front p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .card-back {
+      background: linear-gradient(145deg, #0f1a3a, #091124);
+      transform: rotateY(180deg);
+      color: var(--text);
+    }
+
+    .card-back a {
+      margin-top: 10px;
+      padding: 6px 14px;
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    .card-back a:hover {
+      background: var(--accent);
+      color: var(--bg1);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    /* 🔹 FOOTER */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      background: rgba(10, 17, 36, 0.6);
+      backdrop-filter: blur(8px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .project-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="index.html" id="home-link">Ana Sayfa</a>
+      <a href="contact.html" id="contact-link">İletişim</a>
+      <div class="lang-selector">
+        <button class="lang-btn" id="lang-toggle">🌐</button>
+        <div class="lang-options" id="lang-options">
+          <button data-lang="tr">Türkçe</button>
+          <button data-lang="en">English</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1 id="projects-title">Projeler</h1>
+    <div class="project-grid" id="project-grid"></div>
+  </main>
+
+  <footer id="footer">
+    © <span id="year"></span> Cyber Developer —
+    <a href="https://www.apache.org/licenses/LICENSE-2.0" style="color: var(--accent); text-decoration: none;">
+      Apache 2.0 Lisansı
+    </a> ile korunmaktadır.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const langToggle = document.getElementById('lang-toggle');
+    const langOptions = document.getElementById('lang-options');
+
+    langToggle.addEventListener('click', () => {
+      langOptions.style.display = langOptions.style.display === 'block' ? 'none' : 'block';
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.lang-selector')) langOptions.style.display = 'none';
+    });
+
+    const projects = {
+      tr: [
+        { title: "🔒 Siber Güvenlik Denetim Aracı", desc: "Kurumsal ağlar için otomatik zafiyet taraması yapan modern bir araç.", back: "Raporlama ve öneri modülü içerir. Güvenlik açıklarını analiz eder.", btn: "Detaylar" },
+        { title: "🧠 Yapay Zekâ Sohbet Asistanı", desc: "Doğal dil işleme (NLP) ile geliştirilmiş çok dilli sohbet asistanı.", back: "Makine öğrenimiyle güçlendirilmiştir. Kullanıcı davranışlarını öğrenir.", btn: "Detaylar" },
+        { title: "📊 Veri Analiz Dashboard", desc: "Gerçek zamanlı istatistikler ve görselleştirme ile veri izleme arayüzü.", back: "API destekli analitik altyapısı sayesinde dinamik veri çekimi sağlar.", btn: "Detaylar" },
+        { title: "💻 Açık Kaynak Kod Editörü", desc: "Tarayıcı üzerinde çalışan, çok dilli sözdizimi vurgulamalı editör.", back: "Hızlı, hafif ve modern bir tasarıma sahip açık kaynaklı araç.", btn: "Detaylar" }
+      ],
+      en: [
+        { title: "🔒 Cyber Security Audit Tool", desc: "A modern tool for automated vulnerability scanning in corporate networks.", back: "Includes reporting and recommendation modules. Analyzes security vulnerabilities.", btn: "Details" },
+        { title: "🧠 AI Chat Assistant", desc: "A multilingual chatbot powered by natural language processing (NLP).", back: "Enhanced with machine learning. Adapts to user behavior.", btn: "Details" },
+        { title: "📊 Data Analytics Dashboard", desc: "Real-time statistics and visualization for monitoring data streams.", back: "Supports API-based analytics for dynamic data retrieval.", btn: "Details" },
+        { title: "💻 Open Source Code Editor", desc: "A lightweight browser-based editor with syntax highlighting.", back: "Fast, minimalist, and open-source with a modern UI.", btn: "Details" }
+      ]
+    };
+
+    const texts = {
+      tr: {
+        title: "Cyber Developer | Projeler",
+        home: "Ana Sayfa",
+        contact: "İletişim",
+        projects: "Projeler",
+        footer: `© ${new Date().getFullYear()} Cyber Developer — <a href='https://www.apache.org/licenses/LICENSE-2.0' style='color: var(--accent); text-decoration: none;'>Apache 2.0 Lisansı</a> ile korunmaktadır.`
+      },
+      en: {
+        title: "Cyber Developer | Projects",
+        home: "Home",
+        contact: "Contact",
+        projects: "Projects",
+        footer: `© ${new Date().getFullYear()} Cyber Developer — <a href='https://www.apache.org/licenses/LICENSE-2.0' style='color: var(--accent); text-decoration: none;'>Protected under Apache 2.0 License</a>`
+      }
+    };
+
+    function renderProjects(lang) {
+      const grid = document.getElementById("project-grid");
+      grid.innerHTML = projects[lang].map(p => `
+        <div class="project-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <h2>${p.title}</h2>
+              <p>${p.desc}</p>
+            </div>
+            <div class="card-back">
+              <p>${p.back}</p>
+              <a href="#">${p.btn}</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setLanguage(lang) {
+      const t = texts[lang];
+      document.title = t.title;
+      document.documentElement.lang = lang;
+      document.getElementById("home-link").textContent = t.home;
+      document.getElementById("contact-link").textContent = t.contact;
+      document.getElementById("projects-title").textContent = t.projects;
+      document.getElementById("footer").innerHTML = t.footer;
+      renderProjects(lang);
+      localStorage.setItem("lang", lang);
+    }
+
+    const savedLang = localStorage.getItem("lang") || (navigator.language.startsWith("en") ? "en" : "tr");
+    setLanguage(savedLang);
+
+    document.querySelectorAll('.lang-options button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setLanguage(btn.dataset.lang);
+        langOptions.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
